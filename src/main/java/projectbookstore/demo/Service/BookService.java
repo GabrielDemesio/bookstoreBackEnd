@@ -34,9 +34,12 @@ public class BookService {
 
     }
 
+    public List<Book> findByCategory(String category){
+        return bookRepository.findByCategory(category);
+    }
     public Book findById(@PathVariable Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found"+id));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found: "+id));
     }
 
     public Book update(@PathVariable Long id, @RequestBody Book book) {
@@ -53,7 +56,7 @@ public class BookService {
 
     public void delete(@PathVariable Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found"+id));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found: "+id));
         bookRepository.delete(book);
     }
 

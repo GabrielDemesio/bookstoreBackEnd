@@ -5,10 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.math.BigInteger;
 
 @Validated
 @Data
@@ -36,4 +34,8 @@ public class Book {
     @Column(nullable = false, name = "text")
     private String text;
 
+    @NotNull
+    @NotBlank(message = "Category must be defined")
+    @Column(nullable = false, name = "category")
+    private String category;
 }

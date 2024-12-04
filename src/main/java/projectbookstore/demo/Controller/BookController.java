@@ -19,6 +19,13 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @GetMapping("/books/category/{category}")
+    public ResponseEntity<List<Book>> getBooksByCategory(@PathVariable String category) {
+        List<Book> books = bookService.findByCategory(category);
+        return ResponseEntity.ok(books);
+    }
+
+
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> books = bookService.list();
@@ -36,8 +43,8 @@ public class BookController {
     }
     @PutMapping("books/{id}")
     public ResponseEntity<Book> update(
-            @PathVariable @NotNull(message = "Id não pode ser nulo")
-            @Min(value = 1, message = "Id deve ser maior que 0") Long id,
+            @PathVariable @NotNull(message = "Id cannot be null")
+            @Min(value = 1, message = "Id must be have defined") Long id,
             @Valid @RequestBody Book book) {
         Book updatedBook = bookService.update(id, book);
         return ResponseEntity.ok(updatedBook);
@@ -45,8 +52,8 @@ public class BookController {
 
     @DeleteMapping("books/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable @NotNull(message = "Id não pode ser nulo")
-            @Min(value = 1, message = "Id deve ser maior que 0") Long id) {
+            @PathVariable @NotNull(message = "Id cannot be null")
+            @Min(value = 1, message = "Id must be have defined") Long id) {
         bookService.delete(id);
         return ResponseEntity.noContent().build();
     }
